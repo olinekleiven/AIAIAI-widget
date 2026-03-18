@@ -445,7 +445,7 @@ const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black text-uib-burgundy tracking-tight">AI-treet</h1>
-          <p className="text-slate-500 text-sm font-medium">AI AI AI, brukte jeg så mye energi?!</p>
+          <p className="text-slate-500 text-sm font-medium">AI, AI AI - tar det så mye energi?</p>
         </div>
         <div className="bg-slate-200 p-1 rounded-2xl flex gap-1 overflow-x-auto flex-wrap sm:flex-nowrap">
           {(['simulation', 'daily', 'weekly', 'monthly'] as ViewMode[]).map(mode => (
