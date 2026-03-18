@@ -568,7 +568,7 @@ const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
 
 // --- Main App ---
 export default function App() {
-  const [widgetSize, setWidgetSize] = useState<WidgetSize>('large');
+  const [widgetSize, setWidgetSize] = useState<WidgetSize>('xlarge');
   const [viewMode, setViewMode] = useState<ViewMode>('simulation');
   const [stats, setStats] = useState<Stats>({ prompts: 0, water: 0, energy: 0 });
   const [selectedModel, setSelectedModel] = useState<AIModel>('ChatGPT');
