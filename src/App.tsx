@@ -462,38 +462,36 @@ const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
           <div className="absolute bottom-10 right-10 w-48 h-48 bg-uib-mint rounded-full blur-3xl"/>
         </div>
         <div className="relative z-10">
-          <div className="flex flex-wrap justify-between items-center gap-4 mb-2">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
-                <Clock size={12} className="text-uib-mint"/>
-                <span className="text-[10px] font-bold uppercase tracking-widest">
-                  {viewMode === 'simulation' ? 'Hurtigsjekk' : `${viewMode === 'daily' ? 'Daglig' : viewMode === 'weekly' ? 'Ukentlig' : 'Månedlig'} visning`}
-                </span>
-              </div>
-              {viewMode === 'simulation' && (
-                <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2">
-                  <select value={selectedModel} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => onModelChange(e.target.value as AIModel)}
-                    className="bg-white/10 border border-white/20 rounded-lg px-2 py-1 text-[9px] font-bold focus:outline-none text-white appearance-none cursor-pointer hover:bg-white/20 transition-colors">
-                    {Object.keys(MODEL_MULTIPLIERS).map(m => <option key={m} value={m} className="text-uib-burgundy">{m}</option>)}
-                  </select>
-                  <button onClick={onSimulate} className="bg-uib-mint text-uib-burgundy font-bold py-1 px-3 rounded-lg hover:bg-white transition-all active:scale-[0.95] flex items-center gap-1 text-[9px] shadow-sm">
-                    <Zap size={10}/> Simuler
-                  </button>
-                </motion.div>
-              )}
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full shrink-0">
+              <Clock size={12} className="text-uib-mint"/>
+              <span className="text-[10px] font-bold uppercase tracking-widest">
+                {viewMode === 'simulation' ? 'Hurtigsjekk' : `${viewMode === 'daily' ? 'Daglig' : viewMode === 'weekly' ? 'Ukentlig' : 'Månedlig'} visning`}
+              </span>
             </div>
-            <button onClick={viewMode === 'simulation' ? onReset : () => onViewChange('simulation')} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+            {viewMode === 'simulation' && (
+              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2 flex-wrap">
+                <select value={selectedModel} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => onModelChange(e.target.value as AIModel)}
+                  className="bg-white/10 border border-white/20 rounded-lg px-2 py-1 text-[9px] font-bold focus:outline-none text-white appearance-none cursor-pointer hover:bg-white/20 transition-colors">
+                  {Object.keys(MODEL_MULTIPLIERS).map(m => <option key={m} value={m} className="text-uib-burgundy">{m}</option>)}
+                </select>
+                <button onClick={onSimulate} className="bg-uib-mint text-uib-burgundy font-bold py-1 px-3 rounded-lg hover:bg-white transition-all active:scale-[0.95] flex items-center gap-1 text-[9px] shadow-sm">
+                  <Zap size={10}/> Simuler
+                </button>
+              </motion.div>
+            )}
+            <button onClick={viewMode === 'simulation' ? onReset : () => onViewChange('simulation')} className="p-2 hover:bg-white/10 rounded-full transition-colors ml-auto">
               <RefreshCw size={16} className="text-uib-mint"/>
             </button>
           </div>
           <TreeVisualizer stress={stress} lightningActive={lightningActive} fallingLeaves={fallingLeaves} lightningPaths={lightningPaths}/>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-8 pt-6 border-t border-white/10">
+          <div className="grid grid-cols-3 gap-2 mt-8 pt-6 border-t border-white/10">
             {viewMode === 'simulation' ? (
-              <div className="bg-white p-4 rounded-2xl border border-white/20 transition-transform hover:scale-[1.02] shadow-sm">
-                <div className="text-uib-burgundy mb-2"><Send size={14}/></div>
-                <label className="text-[8px] font-bold uppercase text-uib-burgundy/40 tracking-wider mb-1 block">Prompter</label>
+              <div className="bg-white p-2 sm:p-4 rounded-2xl border border-white/20 transition-transform hover:scale-[1.02] shadow-sm">
+                <div className="text-uib-burgundy mb-1 sm:mb-2"><Send size={12}/></div>
+                <label className="text-[7px] font-bold uppercase text-uib-burgundy/40 tracking-wider mb-1 block">Prompter</label>
                 <input type="number" value={manualInput} onChange={(e: React.ChangeEvent<HTMLInputElement>) => onManualInputChange(e.target.value)}
-                  className="w-full bg-transparent text-base font-black text-uib-burgundy focus:outline-none border-b border-uib-burgundy/20"/>
+                  className="w-full bg-transparent text-sm font-black text-uib-burgundy focus:outline-none border-b border-uib-burgundy/20"/>
               </div>
             ) : (
               <InnerMetricCard icon={<Send size={14}/>} label="Prompter" value={stats.prompts.toString()}/>
@@ -716,10 +714,10 @@ export default function App() {
 
 function InnerMetricCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="bg-white p-4 rounded-2xl border border-white/20 transition-transform hover:scale-[1.02] shadow-sm">
-      <div className="text-uib-burgundy mb-2">{icon}</div>
-      <p className="text-[8px] font-bold uppercase text-uib-burgundy/40 tracking-wider mb-1">{label}</p>
-      <p className="text-base font-black text-uib-burgundy">{value}</p>
+    <div className="bg-white p-2 sm:p-4 rounded-2xl border border-white/20 transition-transform hover:scale-[1.02] shadow-sm">
+      <div className="text-uib-burgundy mb-1 sm:mb-2">{icon}</div>
+      <p className="text-[7px] font-bold uppercase text-uib-burgundy/40 tracking-wider mb-1">{label}</p>
+      <p className="text-sm sm:text-base font-black text-uib-burgundy">{value}</p>
     </div>
   );
 }
