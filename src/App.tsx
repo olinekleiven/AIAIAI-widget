@@ -277,44 +277,45 @@ interface WidgetProps {
   leaderboard: { name: string; impact: number }[];
 }
 
-// SMALL: 170×170 — tree + health + one key daily stat
-const SmallWidget = ({ stress, lightningActive, fallingLeaves, lightningPaths, stats }: WidgetProps) => {
-  const dailyPrompts = stats.prompts > 0 ? stats.prompts : MOCK_DATA.daily.prompts;
-  const dailyWater = stats.water > 0 ? stats.water : MOCK_DATA.daily.water;
+// SMALL: 170×170 — always shows today's daily consumption in the tree
+const SmallWidget = ({ lightningActive, fallingLeaves, lightningPaths }: WidgetProps) => {
+  const dailyPrompts = MOCK_DATA.daily.prompts;   // 12
+  const dailyEnergy = MOCK_DATA.daily.energy;     // 0.040
+  // Tree stress based on daily usage (max ~50 prompts/day)
+  const dailyStress = Math.min(dailyPrompts / 50, 1);
   return (
     <div className="w-full h-full flex flex-col overflow-hidden relative">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 pt-3 shrink-0">
+      <div className="flex items-center justify-between px-3 pt-2.5 shrink-0">
         <div className="flex items-center gap-1">
-          <Leaf size={8} className="text-uib-mint" />
-          <span className="text-white text-[7px] font-black uppercase tracking-widest">AI Miljø</span>
+          <Leaf size={7} className="text-uib-mint" />
+          <span className="text-white/80 text-[6.5px] font-black uppercase tracking-widest">AI Miljø</span>
         </div>
-        <span className={`text-[7px] font-black uppercase tracking-widest ${stress > 0.7 ? 'text-orange-400' : 'text-uib-mint'}`}>
-          {Math.max(0, Math.round((1 - stress) * 100))}%
+        <span className={`text-[6.5px] font-black uppercase tracking-widest ${dailyStress > 0.7 ? 'text-orange-400' : 'text-uib-mint'}`}>
+          {Math.max(0, Math.round((1 - dailyStress) * 100))}%
         </span>
       </div>
-      {/* Tree */}
+
+      {/* Tree shows daily stress level */}
       <motion.div
         className="flex-1 relative"
-        animate={lightningActive ? { x: [0, -5, 4, -3, 3, 0] } : { x: 0 }}
+        animate={lightningActive ? { x: [0, -4, 3, -2, 2, 0] } : { x: 0 }}
         transition={{ duration: 0.3 }}
       >
         <LightningStrike active={lightningActive} paths={lightningPaths} />
         {fallingLeaves.map(id => <FallingLeaf key={id} id={id} />)}
-        <svg viewBox="-75 -95 150 165" className="w-full h-full">
-          <TreePaths stress={stress} />
+        <svg viewBox="-120 -130 240 260" className="w-full h-full">
+          <TreePaths stress={dailyStress} />
         </svg>
       </motion.div>
-      {/* Daily stat */}
-      <div className="shrink-0 pb-2.5 px-3 flex items-center justify-between">
-        <div className="flex items-center gap-1">
-          <Send size={7} className="text-white/40" />
-          <span className="text-white/60 text-[7px] font-semibold">{dailyPrompts} i dag</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <Droplets size={7} className="text-white/40" />
-          <span className="text-white/60 text-[7px] font-semibold">{dailyWater.toFixed(1)}L</span>
-        </div>
+
+      {/* Daily stats — very small, one line */}
+      <div className="shrink-0 pb-2.5 px-3 flex items-center gap-1.5">
+        <Send size={6} className="text-white/35 shrink-0" />
+        <span className="text-white/55 text-[6px] font-semibold">{dailyPrompts} prompts</span>
+        <span className="text-white/25 text-[6px]">·</span>
+        <Zap size={6} className="text-white/35 shrink-0" />
+        <span className="text-white/55 text-[6px] font-semibold">{dailyEnergy.toFixed(3)} kWh</span>
       </div>
     </div>
   );
@@ -381,7 +382,7 @@ const LargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightningP
     <div className="flex items-center justify-between mb-1 shrink-0">
       <div>
         <p className="text-white font-black text-sm">AI Miljø</p>
-        <p className="text-white/40 text-[8px] font-semibold">Miljøpåvirkning av AI</p>
+        <p className="text-white/40 text-[8px] font-semibold">AI-treet</p>
       </div>
       <div className="flex items-center gap-1.5">
         {viewMode === 'simulation' && (
@@ -441,12 +442,12 @@ const LargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightningP
 const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightningPaths, viewMode, selectedModel, manualInput, tipIndex, onSimulate, onReset, onModelChange, onManualInputChange, onViewChange, leaderboard }: WidgetProps) => (
   <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
     <div className="lg:col-span-8 space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-uib-burgundy tracking-tight">Miljøpåvirkning av AI</h1>
+          <h1 className="text-2xl font-black text-uib-burgundy tracking-tight">AI-treet</h1>
           <p className="text-slate-500 text-sm font-medium">AI AI AI, brukte jeg så mye energi?!</p>
         </div>
-        <div className="bg-slate-200 p-1 rounded-2xl flex gap-1">
+        <div className="bg-slate-200 p-1 rounded-2xl flex gap-1 overflow-x-auto flex-wrap sm:flex-nowrap">
           {(['simulation', 'daily', 'weekly', 'monthly'] as ViewMode[]).map(mode => (
             <button key={mode} onClick={() => onViewChange(mode)}
               className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${viewMode === mode ? 'bg-white text-uib-burgundy shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
@@ -642,8 +643,8 @@ export default function App() {
 
   const frameDims: Record<Exclude<WidgetSize, 'xlarge'>, string> = {
     small: 'w-[170px] h-[170px]',
-    medium: 'w-[358px] h-[170px]',
-    large: 'w-[358px] h-[390px]',
+    medium: 'w-full max-w-[358px] h-[170px]',
+    large: 'w-full max-w-[358px] h-[390px]',
   };
 
   return (
@@ -662,7 +663,7 @@ export default function App() {
           y: pickerY,
           zIndex: 50,
         }}
-        className="flex items-center gap-1 bg-slate-400 rounded-[20px] p-1.5 shadow-xl cursor-grab active:cursor-grabbing select-none"
+        className="flex items-center gap-1 bg-slate-400 rounded-[20px] p-1.5 shadow-xl cursor-grab active:cursor-grabbing select-none max-w-[calc(100vw-2rem)]"
       >
         {(['small', 'medium', 'large', 'xlarge'] as WidgetSize[]).map(s => (
           <button
@@ -680,14 +681,14 @@ export default function App() {
       {/* ── Content ── */}
       {widgetSize === 'xlarge' ? (
         // Full dashboard — original layout
-        <div className="p-4 md:p-8 pb-24 flex items-start justify-center">
+        <div className="p-4 md:p-8 pb-32 flex items-start justify-center">
           <div className="w-full max-w-5xl">
             <XLargeWidget {...sharedProps} />
           </div>
         </div>
       ) : (
         // Centered widget card
-        <div className="flex items-center justify-center min-h-screen pb-24">
+        <div className="flex items-center justify-center min-h-screen pb-24 px-4">
           <div className={`${frameDims[widgetSize]} bg-uib-burgundy uib-gradient rounded-[2.5rem] shadow-2xl overflow-hidden`}>
             <AnimatePresence mode="wait">
               {widgetSize === 'small' && (
