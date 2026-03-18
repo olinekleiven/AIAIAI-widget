@@ -451,7 +451,7 @@ const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
           {(['simulation', 'daily', 'weekly', 'monthly'] as ViewMode[]).map(mode => (
             <button key={mode} onClick={() => onViewChange(mode)}
               className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all ${viewMode === mode ? 'bg-white text-uib-burgundy shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
-              {mode === 'simulation' ? 'Fyll manuelt' : mode === 'daily' ? 'Daglig' : mode === 'weekly' ? 'Ukentlig' : 'Månedlig'}
+              {mode === 'simulation' ? 'Hurtigsjekk' : mode === 'daily' ? 'Daglig' : mode === 'weekly' ? 'Ukentlig' : 'Månedlig'}
             </button>
           ))}
         </div>
@@ -467,7 +467,7 @@ const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
               <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
                 <Clock size={12} className="text-uib-mint"/>
                 <span className="text-[10px] font-bold uppercase tracking-widest">
-                  {viewMode === 'simulation' ? 'Fyll manuelt' : `${viewMode === 'daily' ? 'Daglig' : viewMode === 'weekly' ? 'Ukentlig' : 'Månedlig'} visning`}
+                  {viewMode === 'simulation' ? 'Hurtigsjekk' : `${viewMode === 'daily' ? 'Daglig' : viewMode === 'weekly' ? 'Ukentlig' : 'Månedlig'} visning`}
                 </span>
               </div>
               {viewMode === 'simulation' && (
