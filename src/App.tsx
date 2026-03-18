@@ -466,7 +466,7 @@ const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
             <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full shrink-0">
               <Clock size={12} className="text-uib-mint"/>
               <span className="text-[10px] font-bold uppercase tracking-widest">
-                {viewMode === 'simulation' ? 'Hurtigsjekk' : `${viewMode === 'daily' ? 'Daglig' : viewMode === 'weekly' ? 'Ukentlig' : 'Månedlig'} visning`}
+                {viewMode === 'simulation' ? 'Hurtigsjekk' : viewMode === 'daily' ? 'Din daglige visning' : viewMode === 'weekly' ? 'Din ukentlige visning' : 'Din månedlige visning'}
               </span>
             </div>
             {viewMode === 'simulation' && (
