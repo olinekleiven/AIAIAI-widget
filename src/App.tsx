@@ -289,7 +289,7 @@ const SmallWidget = ({ lightningActive, fallingLeaves, lightningPaths }: WidgetP
       <div className="flex items-center justify-between px-3 pt-2.5 shrink-0">
         <div className="flex items-center gap-1">
           <Leaf size={7} className="text-uib-mint" />
-          <span className="text-white/80 text-[6.5px] font-black uppercase tracking-widest">AI Miljø</span>
+          <span className="text-white/80 text-[6.5px] font-black uppercase tracking-widest">AI-treet</span>
         </div>
         <span className={`text-[6.5px] font-black uppercase tracking-widest ${dailyStress > 0.7 ? 'text-orange-400' : 'text-uib-mint'}`}>
           {Math.max(0, Math.round((1 - dailyStress) * 100))}%
@@ -347,7 +347,7 @@ const MediumWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
     {/* Stats side */}
     <div className="w-[55%] flex flex-col justify-between p-4 py-5">
       <div>
-        <p className="text-white/50 text-[7px] font-bold uppercase tracking-widest">AI Miljø</p>
+        <p className="text-white/50 text-[7px] font-bold uppercase tracking-widest">AI-treet</p>
         <p className="text-white font-black text-xl leading-none mt-0.5">
           {Math.max(0, Math.round((1 - stress) * 100))}<span className="text-sm font-bold text-white/60">%</span>
         </p>
@@ -381,7 +381,7 @@ const LargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightningP
     {/* Top bar */}
     <div className="flex items-center justify-between mb-1 shrink-0">
       <div>
-        <p className="text-white font-black text-sm">AI Miljø</p>
+        <p className="text-white font-black text-sm">AI-treet</p>
         <p className="text-white/40 text-[8px] font-semibold">AI-treet</p>
       </div>
       <div className="flex items-center gap-1.5">
