@@ -440,11 +440,11 @@ const LargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightningP
 
 // XLARGE: original full dashboard
 const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightningPaths, viewMode, selectedModel, manualInput, tipIndex, onSimulate, onReset, onModelChange, onManualInputChange, onViewChange, leaderboard }: WidgetProps) => (
-  <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
-    <div className="lg:col-span-8 space-y-6">
+  <div className="w-full grid grid-cols-12 gap-4 lg:gap-8">
+    <div className="col-span-7 lg:col-span-8 space-y-4 lg:space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-black text-uib-burgundy tracking-tight">AI-treet</h1>
+        <div className="text-center lg:text-left">
+          <h1 className="text-3xl lg:text-2xl font-black text-uib-burgundy tracking-tight">AI-treet</h1>
           <p className="text-slate-500 text-sm font-medium">AI, AI AI - tar det så mye energi?</p>
         </div>
         <div className="bg-slate-200 p-1 rounded-2xl flex gap-0.5 sm:gap-1">
@@ -502,7 +502,7 @@ const XLargeWidget = ({ stress, stats, lightningActive, fallingLeaves, lightning
         </div>
       </div>
     </div>
-    <div className="lg:col-span-4 space-y-6">
+    <div className="col-span-5 lg:col-span-4 space-y-4 lg:space-y-6">
       <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-100">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
