@@ -281,8 +281,7 @@ interface WidgetProps {
 const SmallWidget = ({ lightningActive, fallingLeaves, lightningPaths }: WidgetProps) => {
   const dailyPrompts = MOCK_DATA.daily.prompts;   // 12
   const dailyEnergy = MOCK_DATA.daily.energy;     // 0.040
-  // Tree stress based on daily usage (max ~50 prompts/day)
-  const dailyStress = Math.min(dailyPrompts / 50, 1);
+  const dailyStress = 0;
   return (
     <div className="w-full h-full flex flex-col overflow-hidden relative">
       {/* Header */}
